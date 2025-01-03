@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.bagel.extra_apoth_compat.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "dev.bagel.extra_apoth_compat.mixin.MixinPlugin",
+  "mixins": [
+    "apotheosis.actuallyadditions.LensDisenchantingMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
