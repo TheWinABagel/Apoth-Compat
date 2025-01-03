@@ -129,10 +129,11 @@ dependencies {
     implementation "dev.shadowsoffire:Apotheosis:${minecraft_version}-${apotheosis_version}"
 
     //Curios
-    implementation      "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
-    //Patchouli (needed for apoth)
-
+    //Pufferfish's Skills
+    implementation "curse.maven:puffish-skills-835091:${puffish_version}"
+    implementation "curse.maven:puffish-attributes-991341:6047034"
 
     //EMI
     compileOnly "dev.emi:emi-neoforge:${emi_version}+${minecraft_version}:api"

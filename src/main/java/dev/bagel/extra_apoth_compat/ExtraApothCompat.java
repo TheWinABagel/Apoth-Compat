@@ -1,21 +1,20 @@
 package dev.bagel.extra_apoth_compat;
 
-import dev.bagel.extra_apoth_compat.compat.CuriosCompat;
-import net.neoforged.fml.ModList;
-import org.slf4j.Logger;
-
 import com.mojang.logging.LogUtils;
-
+import dev.bagel.extra_apoth_compat.compat.CuriosCompat;
+import dev.bagel.extra_apoth_compat.compat.PuffishCompat;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import org.slf4j.Logger;
 
 @Mod(ExtraApothCompat.MODID)
 public class ExtraApothCompat {
@@ -41,6 +40,10 @@ public class ExtraApothCompat {
          if (ModList.get().isLoaded("curios") && ModConfig.curiosCompat) {
             event.enqueueWork(CuriosCompat::init);
          }
+
+        if (ModList.get().isLoaded("puffish_skills")) {
+            event.enqueueWork(PuffishCompat::init);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
