@@ -1,5 +1,7 @@
 package dev.bagel.extra_apoth_compat;
 
+import dev.bagel.extra_apoth_compat.compat.CuriosCompat;
+import net.neoforged.fml.ModList;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -36,8 +38,9 @@ public class ExtraApothCompat {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
+         if (ModList.get().isLoaded("curios") && ModConfig.curiosCompat) {
+            event.enqueueWork(CuriosCompat::init);
+         }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
