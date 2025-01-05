@@ -136,7 +136,7 @@ dependencies {
     implementation "curse.maven:puffish-attributes-991341:6047034"
 
     //EMI
-    compileOnly "dev.emi:emi-neoforge:${emi_version}+${minecraft_version}:api"
+    compileOnly "dev.emi:emi-neoforge:${emi_version}+${minecraft_version}"
     localRuntime "dev.emi:emi-neoforge:${emi_version}+${minecraft_version}"
 
     //Actually Additions
