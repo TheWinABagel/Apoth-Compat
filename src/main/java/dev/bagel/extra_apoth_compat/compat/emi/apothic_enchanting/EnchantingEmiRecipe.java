@@ -58,17 +58,17 @@ public class EnchantingEmiRecipe implements EmiRecipe {
 
     @Override
     public @Nullable ResourceLocation getId() {
-        return id;
+        return this.id;
     }
 
     @Override
     public List<EmiIngredient> getInputs() {
-        return List.of(input);
+        return List.of(this.input);
     }
 
     @Override
     public List<EmiStack> getOutputs() {
-        return List.of(output);
+        return List.of(this.output);
     }
 
     @Override
@@ -93,8 +93,8 @@ public class EnchantingEmiRecipe implements EmiRecipe {
             }
 
             Font font = Minecraft.getInstance().font;
-            EnchantingStatRegistry.Stats stats = recipe.getRequirements();
-            EnchantingStatRegistry.Stats maxStats = recipe.getMaxRequirements();
+            EnchantingStatRegistry.Stats stats = this.recipe.getRequirements();
+            EnchantingStatRegistry.Stats maxStats = this.recipe.getMaxRequirements();
             gfx.drawString(font, TooltipUtil.lang("gui", "enchant.eterna"), 16, 26, 0x3DB53D, false);
             gfx.drawString(font, TooltipUtil.lang("gui", "enchant.quanta"), 16, 36, 0xFC5454, false);
             gfx.drawString(font, TooltipUtil.lang("gui", "enchant.arcana"), 16, 46, 0xA800A8, false);
@@ -102,7 +102,7 @@ public class EnchantingEmiRecipe implements EmiRecipe {
 
             String s = "" + level;
             int width = 86 - font.width(s);
-            EnchantmentNames.getInstance().initSeed(recipe.hashCode());
+            EnchantmentNames.getInstance().initSeed(this.recipe.hashCode());
             FormattedText itextproperties = EnchantmentNames.getInstance().getRandomName(font, width);
             int color = hover ? 16777088 : 6839882;
             drawWordWrap(font, itextproperties, 77, 6, width, color, gfx);
@@ -176,8 +176,8 @@ public class EnchantingEmiRecipe implements EmiRecipe {
             gfx.pose().popPose();
         });
 
-        widgets.addSlot(input, 5, 5);
-        widgets.addSlot(output, 36, 5).recipeContext(this);
+        widgets.addSlot(this.input, 5, 5);
+        widgets.addSlot(this.output, 36, 5).recipeContext(this);
 
         //TODO EMI-ify above to make this weird hack not necessary (recipe textures rendering behind EMI textures)
         widgets.addButton(0, 0, 0, 0, 0, 0, TEXTURES, () -> false, (mouseX, mouseY, button) -> {});
@@ -195,4 +195,7 @@ public class EnchantingEmiRecipe implements EmiRecipe {
 
     }
 
+    public float getEterna() {
+        return this.recipe.getRequirements().eterna();
+    }
 }
