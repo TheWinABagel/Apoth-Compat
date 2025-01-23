@@ -16,8 +16,11 @@ Partially implemented:
   - [x] Apothic Enchanting
     - [x] Infusion
     - [x] Anvil Recipes
-  - [ ] Apothic Spawners
-    - [ ] Spawner
+  - [x] Apothic Spawners
+    - [x] Spawner
+    - [x] Info
 - [x] Apothic Attributes attribute source support
   - [x] Curios
   - [x] Puffish Skills
+- [ ] Recipe move handler (not sure what this should support atm)
+- [ ] Recipe Defaults

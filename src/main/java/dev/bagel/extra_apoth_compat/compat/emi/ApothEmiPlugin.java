@@ -5,6 +5,7 @@ import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.ApotheosisEmiPlugin;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.CharmInfusionEMIRecipe;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.PotionCharmEMIRecipe;
 import dev.bagel.extra_apoth_compat.compat.emi.apothic_enchanting.ApothicEnchantingEmiPlugin;
+import dev.bagel.extra_apoth_compat.compat.emi.apothic_spawners.ApothicSpawnersEmiPlugin;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
@@ -39,6 +40,10 @@ public class ApothEmiPlugin implements EmiPlugin {
 
         if (ModConfig.Loaded.APOTHEOSIS) {
             ApotheosisEmiPlugin.register(registry);
+        }
+
+        if (ModConfig.Loaded.APOTHIC_SPAWNERS) {
+            ApothicSpawnersEmiPlugin.register(registry);
         }
     }
 }
