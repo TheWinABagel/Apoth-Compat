@@ -31,6 +31,7 @@ public class ApothicEnchantingEmiPlugin {
     public static void register(EmiRegistry registry) {
         registry.addCategory(ENCHANTING);
         registry.addWorkstation(ENCHANTING, EmiStack.of(Blocks.ENCHANTING_TABLE));
+        registry.addRecipeHandler(Ench.Menus.ENCHANTING_TABLE, new EnchantingRecipeHandler());
 
         registry.getRecipeManager().getAllRecipesFor(Ench.RecipeTypes.INFUSION).forEach(holder -> {
             registry.addRecipe(new EnchantingEmiRecipe(holder));
