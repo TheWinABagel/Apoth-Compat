@@ -2,6 +2,7 @@ package dev.bagel.extra_apoth_compat.compat.emi;
 
 import dev.bagel.extra_apoth_compat.ExtraApothCompat;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.GemCuttingEMIRecipe;
+import dev.bagel.extra_apoth_compat.compat.emi.apothic_enchanting.EnchantingEmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.Comparison;
 import dev.emi.emi.api.stack.EmiStack;
@@ -12,8 +13,20 @@ import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.level.block.Blocks;
 
-public class Constants {
+public class EmiConstants {
+    public static class ApothicSpawners {
+        public static EmiRecipeCategory SPAWNER_MODIFIER = new EmiRecipeCategory(ExtraApothCompat.loc("spawner_modifier"),
+                EmiStack.of(Blocks.SPAWNER), EmiStack.of(Blocks.SPAWNER), (r1, r2) -> -r1.getId().compareNamespaced(r2.getId()));
+    }
+
+    public static class ApothicEnchanting {
+        public static EmiRecipeCategory ENCHANTING = new EmiRecipeCategory(ExtraApothCompat.loc("enchanting"),
+                EmiStack.of(Blocks.ENCHANTING_TABLE), EmiStack.of(Blocks.ENCHANTING_TABLE),
+                (r1, r2) -> Float.compare(((EnchantingEmiRecipe) r1).getEterna(), ((EnchantingEmiRecipe) r2).getEterna()));
+    }
+
     public static class Apotheosis {
         public static final Comparison CHARM_COMPARISON = Comparison.of((a, b) -> {
             PotionContents first = a.getItemStack().getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
@@ -37,6 +50,7 @@ public class Constants {
             }
             return false;
         });
+
         public static EmiRecipeCategory GEM_CUTTING = new EmiRecipeCategory(ExtraApothCompat.loc("gem_cutting"), EmiStack.of(Apoth.Blocks.GEM_CUTTING_TABLE.value()), EmiStack.of(Apoth.Blocks.GEM_CUTTING_TABLE.value()), GemCuttingEMIRecipe.SORTER);
     }
 }

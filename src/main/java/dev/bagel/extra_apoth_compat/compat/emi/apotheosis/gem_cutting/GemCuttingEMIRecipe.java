@@ -1,6 +1,6 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting;
 
-import dev.bagel.extra_apoth_compat.compat.emi.Constants;
+import dev.bagel.extra_apoth_compat.compat.emi.EmiConstants;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
@@ -41,7 +41,7 @@ public abstract class GemCuttingEMIRecipe<T extends GemCuttingRecipe> implements
 
     @Override
     public EmiRecipeCategory getCategory() {
-        return Constants.Apotheosis.GEM_CUTTING;
+        return EmiConstants.Apotheosis.GEM_CUTTING;
     }
 
     @Override

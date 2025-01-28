@@ -1,8 +1,7 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting;
 
 import com.google.common.collect.Lists;
-import dev.bagel.extra_apoth_compat.ExtraApothCompat;
-import dev.bagel.extra_apoth_compat.compat.emi.Constants;
+import dev.bagel.extra_apoth_compat.compat.emi.EmiConstants;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.handler.EmiCraftContext;
 import dev.emi.emi.api.recipe.handler.StandardRecipeHandler;
@@ -71,7 +70,6 @@ public class GemCuttingRecipeHandler implements StandardRecipeHandler<GemCutting
         if (action) {
             GemCuttingMenu sh = context.getScreenHandler();
             client.gameMode.handleInventoryButtonClick(sh.containerId, 0);
-            ExtraApothCompat.LOGGER.info("Destination:{}", context.getDestination());
             if (context.getDestination() == EmiCraftContext.Destination.CURSOR) {
                 client.gameMode.handleInventoryMouseClick(sh.containerId, GemCuttingMenu.BASE_SLOT, 0, ClickType.PICKUP, client.player);
             } else if (context.getDestination() == EmiCraftContext.Destination.INVENTORY) {
@@ -108,6 +106,6 @@ public class GemCuttingRecipeHandler implements StandardRecipeHandler<GemCutting
 
     @Override
     public boolean supportsRecipe(EmiRecipe recipe) {
-        return recipe.getCategory() == Constants.Apotheosis.GEM_CUTTING;
+        return recipe.getCategory() == EmiConstants.Apotheosis.GEM_CUTTING;
     }
 }

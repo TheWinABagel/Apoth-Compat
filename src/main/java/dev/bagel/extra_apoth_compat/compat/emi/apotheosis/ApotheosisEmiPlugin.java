@@ -1,7 +1,7 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apotheosis;
 
 import dev.bagel.extra_apoth_compat.ExtraApothCompat;
-import dev.bagel.extra_apoth_compat.compat.emi.Constants;
+import dev.bagel.extra_apoth_compat.compat.emi.EmiConstants;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.BasicGemCuttingEMIRecipe;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.GemCuttingEMIRecipe;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.GemCuttingRecipeHandler;
@@ -32,9 +32,9 @@ public class ApotheosisEmiPlugin {
     }
 
     private static void gemCutting(EmiRegistry registry) {
-        registry.addCategory(Constants.Apotheosis.GEM_CUTTING);
-        registry.addWorkstation(Constants.Apotheosis.GEM_CUTTING, EmiStack.of(Apoth.Blocks.GEM_CUTTING_TABLE.value()));
-        registry.setDefaultComparison(EmiStack.of(Apoth.Items.GEM.value()), Constants.Apotheosis.GEM_COMPARISON);
+        registry.addCategory(EmiConstants.Apotheosis.GEM_CUTTING);
+        registry.addWorkstation(EmiConstants.Apotheosis.GEM_CUTTING, EmiStack.of(Apoth.Blocks.GEM_CUTTING_TABLE.value()));
+        registry.setDefaultComparison(EmiStack.of(Apoth.Items.GEM.value()), EmiConstants.Apotheosis.GEM_COMPARISON);
         registry.addRecipeHandler(Apoth.Menus.GEM_CUTTING, new GemCuttingRecipeHandler());
 
         registry.getRecipeManager().getAllRecipesFor(Apoth.RecipeTypes.GEM_CUTTING).forEach(holder -> {
@@ -58,7 +58,7 @@ public class ApotheosisEmiPlugin {
     }
 
     private static void charm(EmiRegistry registry) {
-        registry.setDefaultComparison(EmiStack.of(Apoth.Items.POTION_CHARM.value()), Constants.Apotheosis.CHARM_COMPARISON);
+        registry.setDefaultComparison(EmiStack.of(Apoth.Items.POTION_CHARM.value()), EmiConstants.Apotheosis.CHARM_COMPARISON);
         ResourceLocation charmId = Apotheosis.loc("potion_charm");
         registry.removeRecipes(charmId);
         registry.getRecipeManager().byKey(charmId).ifPresent(charmRecipe ->

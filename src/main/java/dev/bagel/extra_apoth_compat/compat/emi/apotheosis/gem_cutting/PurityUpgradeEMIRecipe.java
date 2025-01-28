@@ -1,6 +1,5 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting;
 
-import dev.bagel.extra_apoth_compat.ExtraApothCompat;
 import dev.emi.emi.api.neoforge.NeoForgeEmiIngredient;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
@@ -23,7 +22,6 @@ public class PurityUpgradeEMIRecipe extends GemCuttingEMIRecipe<PurityUpgradeRec
         list.add(input);
         list.add(EmiIngredient.of(recipe.left().stream().map(NeoForgeEmiIngredient::of).toList()));
         list.add(EmiIngredient.of(recipe.right().stream().map(NeoForgeEmiIngredient::of).toList()));
-        ExtraApothCompat.LOGGER.error("List of things for items {} is {}", recipe.right(), list.get(3));
         return list;
     }
 

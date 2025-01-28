@@ -1,7 +1,6 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting;
 
 import com.google.common.collect.Lists;
-import dev.bagel.extra_apoth_compat.ExtraApothCompat;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.handler.StandardRecipeHandler;
 import dev.emi.emi.api.stack.Comparison;
@@ -55,7 +54,6 @@ class Filler {
                     }
                     DiscoveredItem biggest = null;
                     for (DiscoveredItem di : d) {
-                        ExtraApothCompat.LOGGER.info("Disovered item: {}", di);
                         if (biggest == null) {
                             biggest = di;
                         } else {

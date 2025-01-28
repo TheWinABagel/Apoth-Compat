@@ -1,6 +1,7 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apothic_spawners;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.bagel.extra_apoth_compat.compat.emi.EmiConstants;
 import dev.bagel.extra_apoth_compat.compat.emi.extension.HoverTextWidget;
 import dev.bagel.extra_apoth_compat.compat.emi.extension.HoverTextureWidget;
 import dev.emi.emi.api.recipe.EmiRecipe;
@@ -15,10 +16,7 @@ import dev.shadowsoffire.apothic_spawners.modifiers.StatModifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -42,7 +40,7 @@ public class SpawnerModifierEmiRecipe implements EmiRecipe {
 
     @Override
     public EmiRecipeCategory getCategory() {
-        return ApothicSpawnersEmiPlugin.SPAWNER_MODIFIER;
+        return EmiConstants.ApothicSpawners.SPAWNER_MODIFIER;
     }
 
     @Override

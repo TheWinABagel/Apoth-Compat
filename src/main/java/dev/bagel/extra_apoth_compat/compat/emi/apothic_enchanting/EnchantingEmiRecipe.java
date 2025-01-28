@@ -1,13 +1,12 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apothic_enchanting;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.emi.emi.EmiPort;
+import dev.bagel.extra_apoth_compat.compat.emi.EmiConstants;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apothic_enchanting.ApothicEnchanting;
 import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.apothic_enchanting.table.ApothEnchantmentScreen;
@@ -18,9 +17,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
@@ -53,7 +50,7 @@ public class EnchantingEmiRecipe implements EmiRecipe {
 
     @Override
     public EmiRecipeCategory getCategory() {
-        return ApothicEnchantingEmiPlugin.ENCHANTING;
+        return EmiConstants.ApothicEnchanting.ENCHANTING;
     }
 
     @Override

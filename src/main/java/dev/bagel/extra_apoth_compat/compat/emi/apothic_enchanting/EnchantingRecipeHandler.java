@@ -1,6 +1,7 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apothic_enchanting;
 
 import com.google.common.collect.Lists;
+import dev.bagel.extra_apoth_compat.compat.emi.EmiConstants;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.handler.StandardRecipeHandler;
 import dev.shadowsoffire.apothic_enchanting.table.ApothEnchantmentMenu;
@@ -28,6 +29,6 @@ public class EnchantingRecipeHandler implements StandardRecipeHandler<ApothEncha
 
     @Override
     public boolean supportsRecipe(EmiRecipe recipe) {
-        return recipe.getCategory() == ApothicEnchantingEmiPlugin.ENCHANTING;
+        return recipe.getCategory() == EmiConstants.ApothicEnchanting.ENCHANTING;
     }
 }

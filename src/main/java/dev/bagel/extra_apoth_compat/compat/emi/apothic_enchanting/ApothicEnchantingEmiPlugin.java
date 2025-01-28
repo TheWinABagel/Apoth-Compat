@@ -1,36 +1,29 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apothic_enchanting;
 
 import dev.bagel.extra_apoth_compat.ExtraApothCompat;
+import dev.bagel.extra_apoth_compat.compat.emi.EmiConstants;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiInfoRecipe;
-import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
-import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apothic_enchanting.ApothicEnchanting;
 import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.apothic_enchanting.util.TooltipUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.List;
 
 public class ApothicEnchantingEmiPlugin {
-    public static EmiRecipeCategory ENCHANTING = new EmiRecipeCategory(ExtraApothCompat.loc("enchanting"),
-            EmiStack.of(Blocks.ENCHANTING_TABLE), EmiStack.of(Blocks.ENCHANTING_TABLE),
-            (r1, r2) -> Float.compare(((EnchantingEmiRecipe) r1).getEterna(), ((EnchantingEmiRecipe) r2).getEterna()));
 
     public static void register(EmiRegistry registry) {
-        registry.addCategory(ENCHANTING);
-        registry.addWorkstation(ENCHANTING, EmiStack.of(Blocks.ENCHANTING_TABLE));
+        registry.addCategory(EmiConstants.ApothicEnchanting.ENCHANTING);
+        registry.addWorkstation(EmiConstants.ApothicEnchanting.ENCHANTING, EmiStack.of(Blocks.ENCHANTING_TABLE));
         registry.addRecipeHandler(Ench.Menus.ENCHANTING_TABLE, new EnchantingRecipeHandler());
 
         registry.getRecipeManager().getAllRecipesFor(Ench.RecipeTypes.INFUSION).forEach(holder -> {

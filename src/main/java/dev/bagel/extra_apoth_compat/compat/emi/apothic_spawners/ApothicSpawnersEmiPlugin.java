@@ -1,20 +1,18 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apothic_spawners;
 
 import dev.bagel.extra_apoth_compat.ExtraApothCompat;
+import dev.bagel.extra_apoth_compat.compat.emi.EmiConstants;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiInfoRecipe;
-import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.shadowsoffire.apothic_spawners.ASConfig;
 import dev.shadowsoffire.apothic_spawners.ASObjects;
 import dev.shadowsoffire.apothic_spawners.ApothicSpawners;
-import mezz.jei.api.constants.VanillaTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -27,12 +25,9 @@ import java.util.List;
 
 public class ApothicSpawnersEmiPlugin {
 
-    public static EmiRecipeCategory SPAWNER_MODIFIER = new EmiRecipeCategory(ExtraApothCompat.loc("spawner_modifier"),
-            EmiStack.of(Blocks.SPAWNER), EmiStack.of(Blocks.SPAWNER), (r1, r2) -> -r1.getId().compareNamespaced(r2.getId()));
-
     public static void register(EmiRegistry registry) {
-        registry.addCategory(SPAWNER_MODIFIER);
-        registry.addWorkstation(SPAWNER_MODIFIER, EmiStack.of(Blocks.SPAWNER));
+        registry.addCategory(EmiConstants.ApothicSpawners.SPAWNER_MODIFIER);
+        registry.addWorkstation(EmiConstants.ApothicSpawners.SPAWNER_MODIFIER, EmiStack.of(Blocks.SPAWNER));
         registry.getRecipeManager().getAllRecipesFor(ASObjects.SPAWNER_MODIFIER.get()).forEach(holder -> {
             registry.addRecipe(new SpawnerModifierEmiRecipe(holder));
         });
