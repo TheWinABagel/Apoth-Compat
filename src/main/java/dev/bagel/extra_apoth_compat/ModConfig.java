@@ -3,33 +3,40 @@ package dev.bagel.extra_apoth_compat;
 import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
 import dev.shadowsoffire.placebo.config.Configuration;
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.LoadingModList;
 
 public class ModConfig {
-
     public static boolean curiosCompat = true;
-    public static String[] disabledMixins = new String[0];
+    public static boolean puffishCompat = true;
+    public static boolean emiCompat = true;
+
 
     public static void load() {
         Configuration cfg = new Configuration(ApothicAttributes.getConfigFile(ExtraApothCompat.MODID));
-        cfg.setTitle("Apotheosis Compat Config");
+        cfg.setTitle("Extra Apoth Compat Mixin Config");
 
         cfg.setCategoryComment("mixins", "");
-        curiosCompat = cfg.getBoolean("Curios Compat", "compat", true, "If curios compatibility should be loaded");
-//        disabledMixins = cfg.getStringList("Disabled Mixins", "compat", new String[]{""}, "Disabled Mixins.");
+        curiosCompat = cfg.getBoolean("Curios Compat", "compat", true, "If Curios compatibility should be loaded.");
+        puffishCompat = cfg.getBoolean("Puffish Compat", "compat", true, "If Puffish Skills compatibility should be loaded.");
+        emiCompat = cfg.getBoolean("Puffish Compat", "compat", true, "If EMI compatibility should be loaded.");
         if (cfg.hasChanged()) {
             cfg.save();
         }
     }
 
     public static class Loaded {
-        public static final boolean APOTHEOSIS = ModList.get().isLoaded("apotheosis");
-        public static final boolean APOTHIC_ENCHANTING = ModList.get().isLoaded("apothic_enchanting");
-        public static final boolean APOTHIC_SPAWNERS = ModList.get().isLoaded("apothic_spawners");
+        public static final boolean APOTHEOSIS = isLoaded("apotheosis");
+        public static final boolean APOTHIC_ENCHANTING = isLoaded("apothic_enchanting");
+        public static final boolean APOTHIC_SPAWNERS = isLoaded("apothic_spawners");
 
-        public static final boolean EMI = ModList.get().isLoaded("emi");
-        public static final boolean CURIOS = ModList.get().isLoaded("curios");
+        public static final boolean JEI = isLoaded("jei");
+        public static final boolean EMI = isLoaded("emi");
+        public static final boolean CURIOS = isLoaded("curios");
 
-        public static final boolean PUFFISH = ModList.get().isLoaded("puffish_skills");
+        public static final boolean PUFFISH = isLoaded("puffish_skills");
 
+        private static boolean isLoaded(String modId) {
+            return LoadingModList.get().getModFileById(modId) != null;
+        }
     }
 }

@@ -11,7 +11,7 @@ Partially implemented:
   - [ ] Apotheosis (Formerly Adventure Module)
     - [x] Charms
     - [ ] Smithing
-    - [ ] Gem Cutting
+    - [x] Gem Cutting
     - [ ] Salvaging
   - [x] Apothic Enchanting
     - [x] Infusion
@@ -23,4 +23,5 @@ Partially implemented:
   - [x] Curios
   - [x] Puffish Skills
 - [ ] Recipe move handler (not sure what this should support atm)
+  - [x] Infusion
 - [ ] Recipe Defaults

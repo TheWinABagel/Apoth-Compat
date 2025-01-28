@@ -29,6 +29,7 @@ public class ExtraApothCompat {
 
     @SubscribeEvent
     private void commonSetup(final FMLCommonSetupEvent event) {
+        ModConfig.load();
          if (ModConfig.Loaded.CURIOS && ModConfig.curiosCompat) {
             event.enqueueWork(CuriosCompat::init);
          }

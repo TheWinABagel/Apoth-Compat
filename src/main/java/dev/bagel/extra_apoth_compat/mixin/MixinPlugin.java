@@ -1,6 +1,8 @@
 package dev.bagel.extra_apoth_compat.mixin;
 
+import dev.bagel.extra_apoth_compat.ExtraApothCompat;
 import dev.bagel.extra_apoth_compat.ModConfig;
+import dev.bagel.extra_apoth_compat.ModMixinConfig;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -12,11 +14,21 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void onLoad(String mixinPackage) {
-        ModConfig.load();
+        ModMixinConfig.load();
     }
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+//        ExtraApothCompat.LOGGER.info("Mixin class name: {}, target is {}", mixinClassName, targetClassName);
+        for (String str : ModMixinConfig.disabledMixins) {
+            if (str.equals(mixinClassName)) return false;
+        }
+        String[] mixinName = mixinClassName.split("\\.");
+        String[] targetName = targetClassName.split("\\.");
+        if (ModConfig.Loaded.JEI && mixinName[4].equals("disable_jei") && ModMixinConfig.disableJeiLoading) {
+            return isLoaded(targetName[2]);
+        }
+
         return true;
     }
 
@@ -43,5 +55,14 @@ public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 
+    }
+
+    private boolean isLoaded(String modId) {
+        return switch (modId) {
+            case "apotheosis" -> ModConfig.Loaded.APOTHEOSIS;
+            case "apothic_enchanting" -> ModConfig.Loaded.APOTHIC_ENCHANTING;
+            case "apothic_spawners" -> ModConfig.Loaded.APOTHIC_SPAWNERS;
+            default -> false;
+        };
     }
 }
