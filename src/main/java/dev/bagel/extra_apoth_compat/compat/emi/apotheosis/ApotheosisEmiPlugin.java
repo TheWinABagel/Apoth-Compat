@@ -2,6 +2,10 @@ package dev.bagel.extra_apoth_compat.compat.emi.apotheosis;
 
 import dev.bagel.extra_apoth_compat.ExtraApothCompat;
 import dev.bagel.extra_apoth_compat.compat.emi.Constants;
+import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.BasicGemCuttingEMIRecipe;
+import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.GemCuttingEMIRecipe;
+import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.GemCuttingRecipeHandler;
+import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.PurityUpgradeEMIRecipe;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.shadowsoffire.apotheosis.Apoth;
@@ -23,9 +27,15 @@ import java.util.List;
 public class ApotheosisEmiPlugin {
 
     public static void register(EmiRegistry registry) {
+        gemCutting(registry);
+        charm(registry);
+    }
+
+    private static void gemCutting(EmiRegistry registry) {
         registry.addCategory(Constants.Apotheosis.GEM_CUTTING);
         registry.addWorkstation(Constants.Apotheosis.GEM_CUTTING, EmiStack.of(Apoth.Blocks.GEM_CUTTING_TABLE.value()));
         registry.setDefaultComparison(EmiStack.of(Apoth.Items.GEM.value()), Constants.Apotheosis.GEM_COMPARISON);
+        registry.addRecipeHandler(Apoth.Menus.GEM_CUTTING, new GemCuttingRecipeHandler());
 
         registry.getRecipeManager().getAllRecipesFor(Apoth.RecipeTypes.GEM_CUTTING).forEach(holder -> {
             if (holder.value() instanceof BasicGemCuttingRecipe bgcr) {
@@ -42,10 +52,12 @@ public class ApotheosisEmiPlugin {
                 }
 
             } else {
-                ExtraApothCompat.LOGGER.error("Unknown gem cutting recipe type {} with id of {}! Report to Extra Apoth Compat's GitHub!", holder.value(), holder.id());
+                ExtraApothCompat.LOGGER.error("Unknown gem cutting recipe type {} with id of {}! Report to Extra Apoth Compat's GitHub so support can be added!", holder.value(), holder.id());
             }
         });
+    }
 
+    private static void charm(EmiRegistry registry) {
         registry.setDefaultComparison(EmiStack.of(Apoth.Items.POTION_CHARM.value()), Constants.Apotheosis.CHARM_COMPARISON);
         ResourceLocation charmId = Apotheosis.loc("potion_charm");
         registry.removeRecipes(charmId);

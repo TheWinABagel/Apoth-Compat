@@ -1,7 +1,7 @@
 package dev.bagel.extra_apoth_compat.compat.emi;
 
 import dev.bagel.extra_apoth_compat.ExtraApothCompat;
-import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.GemCuttingEMIRecipe;
+import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.GemCuttingEMIRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.Comparison;
 import dev.emi.emi.api.stack.EmiStack;

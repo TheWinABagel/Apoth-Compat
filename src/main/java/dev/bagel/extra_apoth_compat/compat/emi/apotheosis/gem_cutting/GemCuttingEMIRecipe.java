@@ -1,4 +1,4 @@
-package dev.bagel.extra_apoth_compat.compat.emi.apotheosis;
+package dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting;
 
 import dev.bagel.extra_apoth_compat.compat.emi.Constants;
 import dev.emi.emi.api.recipe.EmiRecipe;
@@ -26,15 +26,17 @@ public abstract class GemCuttingEMIRecipe<T extends GemCuttingRecipe> implements
     };
 
     protected final ResourceLocation id;
+    private final ResourceLocation realId;
     protected final List<EmiIngredient> inputs;
     protected final EmiStack output;
     protected final T recipe;
 
-    public GemCuttingEMIRecipe(ResourceLocation id, List<EmiIngredient> inputs, EmiStack output, T recipe) {
+    public GemCuttingEMIRecipe(ResourceLocation id, List<EmiIngredient> inputs, EmiStack output, T recipe, ResourceLocation realId) {
         this.id = id;
         this.inputs = inputs;
         this.output = output;
         this.recipe = recipe;
+        this.realId = realId;
     }
 
     @Override
@@ -45,6 +47,10 @@ public abstract class GemCuttingEMIRecipe<T extends GemCuttingRecipe> implements
     @Override
     public ResourceLocation getId() {
         return id;
+    }
+
+    public ResourceLocation getRealId() {
+        return realId;
     }
 
     @Override

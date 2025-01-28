@@ -1,4 +1,4 @@
-package dev.bagel.extra_apoth_compat.compat.emi.apotheosis;
+package dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting;
 
 import dev.emi.emi.api.neoforge.NeoForgeEmiIngredient;
 import dev.emi.emi.api.stack.EmiIngredient;
@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 public class BasicGemCuttingEMIRecipe extends GemCuttingEMIRecipe<BasicGemCuttingRecipe> {
 
     public BasicGemCuttingEMIRecipe(BasicGemCuttingRecipe recipe, ResourceLocation id) {
-        super(id, getInputs(recipe), EmiStack.of(recipe.output()), recipe);
+        super(id, getInputs(recipe), EmiStack.of(recipe.output()), recipe, id);
     }
 
     private static NonNullList<EmiIngredient> getInputs(BasicGemCuttingRecipe recipe) {
