@@ -1,0 +1,7 @@
+{
+  "parent": "emi:item/half_item",
+  "textures": {
+    "first": "apotheosis:items/common_material",
+    "second": "apotheosis:items/epic_material"
+  }
+}

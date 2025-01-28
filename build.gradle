@@ -139,7 +139,7 @@ dependencies {
     localRuntime "dev.emi:emi-neoforge:${emi_version}+${minecraft_version}"
 
     //Actually Additions
-    implementation "curse.maven:actually-additions-228404:6003504"
+    compileOnly "curse.maven:actually-additions-228404:6003504"
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
