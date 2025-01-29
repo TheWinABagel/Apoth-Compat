@@ -41,7 +41,7 @@ public class ApothicEnchantingEmiPlugin {
         cursedDiaSword.enchant(randomCurse, 1);
 
         ItemStack enchBook = new ItemStack(Items.ENCHANTED_BOOK);
-        enchBook.enchant(randomEnch, 1);
+        enchBook.enchant(randomEnch, 1);//todo was missing in apoth, report
 
         registry.addRecipe(new DummyEMIAnvilRecipe(
                 cursedDiaSword,

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class ApothSmithingEMIRecipe extends EmiSmithingRecipe {
-    private final int uniq = EmiUtil.RANDOM.nextInt();
+    protected final int uniq = EmiUtil.RANDOM.nextInt();
     protected static final List<EmiStack> TOOLS;
 
     static {

@@ -58,7 +58,7 @@ public class SocketingEMIRecipe extends ApothSmithingEMIRecipe {
     }
 
     private ItemStack getGem(ItemStack tool, int slot) {
-        ItemStack gem = slot == 0 ? getValidGem(tool, 0) : currentGem;
+        ItemStack gem = slot == firstSlot() ? getValidGem(tool, 0) : currentGem;
         SocketHelper.setSockets(tool, 1);
         List<GemInstance> gems = new ArrayList<>(List.of(GemInstance.EMPTY));
         gems.set(0, GemInstance.socketed(tool, gem, 0));
@@ -76,5 +76,9 @@ public class SocketingEMIRecipe extends ApothSmithingEMIRecipe {
             //bail if cant find a valid gem, it won't render correctly but that's better than a stack overflow
             return ItemStack.EMPTY;
         }
+    }
+
+    protected int firstSlot() {
+        return 0;
     }
 }

@@ -8,14 +8,18 @@ import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.GemCutting
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.PurityUpgradeEMIRecipe;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.SocketingEMIRecipe;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.SocketingSigilEMIRecipe;
+import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.UnnamingEMIRecipe;
+import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.WithdrawalEMIRecipe;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.affix.UnnamingRecipe;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
 import dev.shadowsoffire.apotheosis.socket.AddSocketsRecipe;
 import dev.shadowsoffire.apotheosis.socket.SocketingRecipe;
+import dev.shadowsoffire.apotheosis.socket.WithdrawalRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.BasicGemCuttingRecipe;
@@ -48,7 +52,7 @@ public class ApotheosisEmiPlugin {
             if (holder.value() instanceof AddSocketsRecipe asr) {
                 registry.removeRecipes(holder.id());
                 registry.addRecipe(new SocketingSigilEMIRecipe(EmiIngredient.of(asr.getInput()), ExtraApothCompat.synthesise(holder.id())));
-            } else if (holder.value() instanceof SocketingRecipe sr) {
+            } else if (holder.value() instanceof SocketingRecipe || holder.value() instanceof WithdrawalRecipe) {
                 registry.removeRecipes(holder.id());
                 List<EmiIngredient> gems = new ArrayList<>();
                 GemRegistry.INSTANCE.getValues().forEach(gem -> {
@@ -58,7 +62,16 @@ public class ApotheosisEmiPlugin {
                         }
                     });
                 });
-                registry.addRecipe(new SocketingEMIRecipe(EmiStack.of(Apoth.Items.GEM.value()), ExtraApothCompat.synthesise(holder.id()), gems));
+                if (holder.value() instanceof SocketingRecipe) {
+                    registry.addRecipe(new SocketingEMIRecipe(EmiStack.of(Apoth.Items.GEM.value()), ExtraApothCompat.synthesise(holder.id()), gems));
+                } else {
+                    registry.addRecipe(new WithdrawalEMIRecipe(EmiStack.of(Apoth.Items.SIGIL_OF_WITHDRAWAL.value()), ExtraApothCompat.synthesise(holder.id()), gems));
+                }
+            } else if (holder.value() instanceof UnnamingRecipe) {
+                registry.removeRecipes(holder.id());
+                registry.addRecipe(new UnnamingEMIRecipe(EmiStack.of(Apoth.Items.SIGIL_OF_UNNAMING.value()), ExtraApothCompat.synthesise(holder.id())));
+            } else {
+                ExtraApothCompat.LOGGER.error("Unknown Apotheosis Smithing recipe type {} with id of {}! Report to Extra Apoth Compat's GitHub so support can be added!", holder.value(), holder.id());
             }
         }
 

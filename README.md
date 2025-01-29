@@ -10,7 +10,7 @@ Partially implemented:
 - [ ] EMI support
   - [ ] Apotheosis (Formerly Adventure Module)
     - [x] Charms
-    - [ ] Smithing
+    - [x] Smithing
     - [x] Gem Cutting
     - [ ] Salvaging
   - [x] Apothic Enchanting
