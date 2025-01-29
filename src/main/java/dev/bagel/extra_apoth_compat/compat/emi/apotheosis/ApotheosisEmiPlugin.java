@@ -6,22 +6,33 @@ import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.BasicGemCu
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.GemCuttingEMIRecipe;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.GemCuttingRecipeHandler;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.PurityUpgradeEMIRecipe;
+import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.SocketingEMIRecipe;
+import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.SocketingSigilEMIRecipe;
 import dev.emi.emi.api.EmiRegistry;
+import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
+import dev.shadowsoffire.apotheosis.socket.AddSocketsRecipe;
+import dev.shadowsoffire.apotheosis.socket.SocketingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
+import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.BasicGemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
+import dev.shadowsoffire.apotheosis.util.ApothSmithingRecipe;
 import dev.shadowsoffire.apothic_enchanting.table.infusion.InfusionRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.SmithingRecipe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ApotheosisEmiPlugin {
@@ -29,6 +40,28 @@ public class ApotheosisEmiPlugin {
     public static void register(EmiRegistry registry) {
         gemCutting(registry);
         charm(registry);
+
+        List<RecipeHolder<SmithingRecipe>> recipes = registry.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING).stream()
+                .filter(holder -> holder.value() instanceof ApothSmithingRecipe)
+                .toList();
+        for (RecipeHolder<SmithingRecipe> holder : recipes) {
+            if (holder.value() instanceof AddSocketsRecipe asr) {
+                registry.removeRecipes(holder.id());
+                registry.addRecipe(new SocketingSigilEMIRecipe(EmiIngredient.of(asr.getInput()), ExtraApothCompat.synthesise(holder.id())));
+            } else if (holder.value() instanceof SocketingRecipe sr) {
+                registry.removeRecipes(holder.id());
+                List<EmiIngredient> gems = new ArrayList<>();
+                GemRegistry.INSTANCE.getValues().forEach(gem -> {
+                    Arrays.stream(Purity.values()).forEach(purity -> {
+                        if (purity.isAtLeast(gem.getMinPurity())) {
+                            gems.add(EmiStack.of(GemRegistry.createGemStack(gem, purity)));
+                        }
+                    });
+                });
+                registry.addRecipe(new SocketingEMIRecipe(EmiStack.of(Apoth.Items.GEM.value()), ExtraApothCompat.synthesise(holder.id()), gems));
+            }
+        }
+
     }
 
     private static void gemCutting(EmiRegistry registry) {
@@ -43,7 +76,7 @@ public class ApotheosisEmiPlugin {
             } else if (holder.value() instanceof PurityUpgradeRecipe pur) {
                 List<GemCuttingEMIRecipe.StackInfo> gems = new ArrayList<>();
                 GemRegistry.INSTANCE.getValues().stream().forEachOrdered(g -> {
-                    if (pur.purity().isAtLeast(g.getMinPurity())) {
+                    if (pur.purity().isAtLeast(g.getMinPurity())) { //todo was reversed in apoth, report
                         gems.add(GemCuttingEMIRecipe.StackInfo.of(g, pur));
                     }
                 });
