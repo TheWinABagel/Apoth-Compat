@@ -13,17 +13,11 @@ import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.Comparator;
 import java.util.List;
 
 public abstract class GemCuttingEMIRecipe<T extends GemCuttingRecipe> implements EmiRecipe {
     public static final ResourceLocation TEXTURES = Apotheosis.loc("textures/gui/gem_cutting_jei.png");
-    public static Comparator<EmiRecipe> SORTER = (o1, o2) -> {
-        if (o1 instanceof PurityUpgradeEMIRecipe r1 && o2 instanceof PurityUpgradeEMIRecipe r2) {
-            return r1.getPurity().compareTo(r2.getPurity());
-        }
-        return 0;
-    };
+
 
     protected final ResourceLocation id;
     private final ResourceLocation realId;

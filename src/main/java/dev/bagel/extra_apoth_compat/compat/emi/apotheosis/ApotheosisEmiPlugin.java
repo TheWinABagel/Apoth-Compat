@@ -6,6 +6,8 @@ import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.BasicGemCu
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.GemCuttingEMIRecipe;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.GemCuttingRecipeHandler;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting.PurityUpgradeEMIRecipe;
+import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.salvaging.SalvagingEMIRecipe;
+import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.salvaging.SalvagingRecipeHandler;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.SocketingEMIRecipe;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.SocketingSigilEMIRecipe;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.UnnamingEMIRecipe;
@@ -44,6 +46,13 @@ public class ApotheosisEmiPlugin {
     public static void register(EmiRegistry registry) {
         gemCutting(registry);
         charm(registry);
+
+        registry.addCategory(EmiConstants.Apotheosis.SALVAGING);
+        registry.addWorkstation(EmiConstants.Apotheosis.SALVAGING, EmiStack.of(Apoth.Blocks.SALVAGING_TABLE.value()));
+        registry.addRecipeHandler(Apoth.Menus.SALVAGE, new SalvagingRecipeHandler());
+        registry.getRecipeManager().getAllRecipesFor(Apoth.RecipeTypes.SALVAGING).forEach(holder -> {
+            registry.addRecipe(new SalvagingEMIRecipe(holder));
+        });
 
         List<RecipeHolder<SmithingRecipe>> recipes = registry.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING).stream()
                 .filter(holder -> holder.value() instanceof ApothSmithingRecipe)
