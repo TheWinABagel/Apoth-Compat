@@ -1,5 +1,6 @@
 package dev.bagel.extra_apoth_compat.compat.emi.extension;
 
+import dev.emi.emi.api.widget.Bounds;
 import dev.emi.emi.api.widget.TextWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
 import dev.emi.emi.api.widget.WidgetTooltipHolder;
@@ -12,11 +13,13 @@ import net.minecraft.util.FormattedCharSequence;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.UnaryOperator;
 
 public class HoverTextWidget extends TextWidget implements WidgetTooltipHolder<HoverTextWidget> {
     private static final Minecraft CLIENT = Minecraft.getInstance();
 
     protected final int hoveredColor;
+    protected Bounds containedArea = null;
     private BiFunction<Integer, Integer, List<ClientTooltipComponent>> tooltipSupplier = (mouseX, mouseY) -> List.of();
 
     public HoverTextWidget(FormattedCharSequence text, int x, int y, int color, int hoverColor, boolean shadow) {
@@ -31,13 +34,19 @@ public class HoverTextWidget extends TextWidget implements WidgetTooltipHolder<H
         int xOff = horizontalAlignment.offset(CLIENT.font.width(text));
         int yOff = verticalAlignment.offset(CLIENT.font.lineHeight);
         context.matrices().translate(xOff, yOff, 300);
-        int color = getBounds().contains(mouseX, mouseY) ? this.color : this.hoveredColor;
+        Bounds bounds = containedArea == null ? getBounds() : containedArea;
+        int color = bounds.contains(mouseX, mouseY) ? this.color : this.hoveredColor;
         if (shadow) {
             context.drawTextWithShadow(text, x, y, color);
         } else {
             context.drawText(text, x, y, color);
         }
         context.pop();
+    }
+
+    @Override
+    public Bounds getBounds() {
+        return super.getBounds();
     }
 
     public static HoverTextWidget create(WidgetHolder holder, FormattedCharSequence text, int x, int y, int color, int hoverColor, boolean shadow) {
@@ -57,5 +66,10 @@ public class HoverTextWidget extends TextWidget implements WidgetTooltipHolder<H
     @Override
     public List<ClientTooltipComponent> getTooltip(int mouseX, int mouseY) {
         return tooltipSupplier.apply(mouseX, mouseY);
+    }
+
+    public HoverTextWidget setHoverBounds(UnaryOperator<Bounds> containedArea) {
+        this.containedArea = containedArea.apply(getBounds());
+        return this;
     }
 }
