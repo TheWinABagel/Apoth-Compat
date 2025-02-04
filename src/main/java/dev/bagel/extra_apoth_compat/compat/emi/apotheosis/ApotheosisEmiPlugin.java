@@ -46,7 +46,10 @@ public class ApotheosisEmiPlugin {
     public static void register(EmiRegistry registry) {
         gemCutting(registry);
         charm(registry);
+        smithing(registry);
+    }
 
+    private static void smithing(EmiRegistry registry) {
         registry.addCategory(EmiConstants.Apotheosis.SALVAGING);
         registry.addWorkstation(EmiConstants.Apotheosis.SALVAGING, EmiStack.of(Apoth.Blocks.SALVAGING_TABLE.value()));
         registry.addRecipeHandler(Apoth.Menus.SALVAGE, new SalvagingRecipeHandler());
@@ -83,7 +86,6 @@ public class ApotheosisEmiPlugin {
                 ExtraApothCompat.LOGGER.error("Unknown Apotheosis Smithing recipe type {} with id of {}! Report to Extra Apoth Compat's GitHub so support can be added!", holder.value(), holder.id());
             }
         }
-
     }
 
     private static void gemCutting(EmiRegistry registry) {

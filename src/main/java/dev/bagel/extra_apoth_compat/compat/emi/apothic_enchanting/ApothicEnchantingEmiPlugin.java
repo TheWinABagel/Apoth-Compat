@@ -12,6 +12,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -31,8 +32,9 @@ public class ApothicEnchantingEmiPlugin {
         });
 
         Registry<Enchantment> enchants = Minecraft.getInstance().level.registryAccess().registryOrThrow(Registries.ENCHANTMENT);
-        Holder<Enchantment> randomEnch = enchants.getRandomElementOf(EnchantmentTags.IN_ENCHANTING_TABLE, Minecraft.getInstance().level.random).orElse(enchants.getAny().get());
-        Holder<Enchantment> randomCurse = enchants.getRandomElementOf(EnchantmentTags.CURSE, Minecraft.getInstance().level.random).orElse(enchants.getAny().get());
+        RandomSource rand = RandomSource.create(); //epic "ThreadLocalRandom accessed from a different thread" moment :sunglasso:
+        Holder<Enchantment> randomEnch = enchants.getRandomElementOf(EnchantmentTags.IN_ENCHANTING_TABLE, rand).orElse(enchants.getAny().get());
+        Holder<Enchantment> randomCurse = enchants.getRandomElementOf(EnchantmentTags.CURSE, rand).orElse(enchants.getAny().get());
 
         ItemStack enchDiaSword = new ItemStack(Items.DIAMOND_SWORD);
         enchDiaSword.enchant(randomEnch, 1);

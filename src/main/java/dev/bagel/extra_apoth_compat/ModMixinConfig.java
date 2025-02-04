@@ -9,8 +9,8 @@ public class ModMixinConfig {
 
     public static void load() {
         Configuration cfg = new Configuration(ApothicAttributes.getConfigFile(ExtraApothCompat.MODID + "_mixins"));
-        disabledMixins = cfg.getStringList("Disabled Mixins", "disable", new String[]{""}, "Disabled Mixins. Only use if you know what you're doing! Check the class structure first.");
-        disableJeiLoading = cfg.getBoolean("Disable JEI Loading", "disable", true, "If Apotheosis JEI support loading should be cancelled via mixin. May slightly improve load times");
+        disabledMixins = cfg.getStringList("Disabled Mixins", "disable", new String[]{""}, "Disabled Mixins. Only use if you know what you're doing! Check the class structure here (https://github.com/TheWinABagel/Apoth-Compat/tree/main/src/main/java/dev/bagel/extra_apoth_compat/mixin) first.");
+        disableJeiLoading = cfg.getBoolean("Disable JEI Loading", "disable", true, "If Apotheosis JEI support loading should be cancelled via mixin. May *very* slightly improve load times if EMI and JEI are loaded simultaneously.");
         if (cfg.hasChanged()) {
             cfg.save();
         }
