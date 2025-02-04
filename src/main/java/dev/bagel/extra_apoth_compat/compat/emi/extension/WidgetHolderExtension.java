@@ -6,6 +6,7 @@ import dev.emi.emi.api.widget.Widget;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 
 import java.util.List;
 
@@ -47,5 +48,13 @@ public class WidgetHolderExtension implements WidgetHolder {
                                                     int regionWidth, int regionHeight, int textureWidth, int textureHeight) {
         return add(new HoverTextureWidget(texture, x, y, width, height, u, v,
                 regionWidth, regionHeight, textureWidth, textureHeight));
+    }
+
+    public HoverTextWidget addHoverTextWidget(FormattedCharSequence text, int x, int y, int color, int hoverColor, boolean shadow) {
+        return add(new HoverTextWidget(text, x, y, color, hoverColor, shadow));
+    }
+
+    public HoverTextWidget addHoverTextWidget(Component text, int x, int y, int color, int hoverColor, boolean shadow) {
+        return add(new HoverTextWidget(text.getVisualOrderText(), x, y, color, hoverColor, shadow));
     }
 }

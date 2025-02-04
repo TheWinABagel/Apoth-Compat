@@ -2,8 +2,7 @@ package dev.bagel.extra_apoth_compat.compat.emi.apothic_spawners;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.bagel.extra_apoth_compat.compat.emi.EmiConstants;
-import dev.bagel.extra_apoth_compat.compat.emi.extension.HoverTextWidget;
-import dev.bagel.extra_apoth_compat.compat.emi.extension.HoverTextureWidget;
+import dev.bagel.extra_apoth_compat.compat.emi.extension.WidgetHolderExtension;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTooltipComponents;
@@ -79,7 +78,8 @@ public class SpawnerModifierEmiRecipe implements EmiRecipe {
     }
 
     @Override
-    public void addWidgets(WidgetHolder widgets) {
+    public void addWidgets(WidgetHolder widgs) {
+        WidgetHolderExtension widgets = WidgetHolderExtension.of(widgs);
         if (recipe.getOffhandInput() == Ingredient.EMPTY) {
             widgets.addTexture(TEXTURES, 1, 31, 28, 34, 0, 88);
         }
@@ -91,7 +91,7 @@ public class SpawnerModifierEmiRecipe implements EmiRecipe {
             //split arrow
             widgets.addTexture(TEXTURES, 10, 28, 18, 19, 10, 28);
             //bottom question mark
-            HoverTextureWidget.create(widgets, TEXTURES, 0, 50, 10, 12, -1, 50)
+            widgets.addHoverTextureWidget(TEXTURES, 0, 50, 10, 12, -1, 50)
                     .hoverTexture(0, 75)
                     .tooltip(List.of(EmiTooltipComponents.of(ApothicSpawners.lang("misc", "mainhand"))));
         } else {
@@ -100,7 +100,7 @@ public class SpawnerModifierEmiRecipe implements EmiRecipe {
 
         }
         //Top question mark
-        HoverTextureWidget.create(widgets, TEXTURES, 0, 13, 10, 12, -1, 13)
+        widgets.addHoverTextureWidget(TEXTURES, 0, 13, 10, 12, -1, 13)
                 .hoverTexture(0, 75)
                 .tooltip(List.of(EmiTooltipComponents.of(ApothicSpawners.lang("misc", "mainhand"))));
 
@@ -135,7 +135,7 @@ public class SpawnerModifierEmiRecipe implements EmiRecipe {
                     list.add(ApothicSpawners.lang("misc", "max_value", n.stat().formatValue(n.max().get())).withStyle(ChatFormatting.GRAY));
             }
 
-            HoverTextWidget.create(widgets, msg, left - font.width(msg), top, 0x8080FF, 0x333333, false).tooltipText(list);
+            widgets.addHoverTextWidget(msg, left - font.width(msg), top, 0x8080FF, 0x333333, false).tooltipText(list);
             top += font.lineHeight + 2;
         }
     }

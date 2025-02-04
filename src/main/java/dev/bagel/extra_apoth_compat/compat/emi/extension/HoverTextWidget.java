@@ -2,13 +2,11 @@ package dev.bagel.extra_apoth_compat.compat.emi.extension;
 
 import dev.emi.emi.api.widget.Bounds;
 import dev.emi.emi.api.widget.TextWidget;
-import dev.emi.emi.api.widget.WidgetHolder;
 import dev.emi.emi.api.widget.WidgetTooltipHolder;
 import dev.emi.emi.runtime.EmiDrawContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 
 import java.util.List;
@@ -47,14 +45,6 @@ public class HoverTextWidget extends TextWidget implements WidgetTooltipHolder<H
     @Override
     public Bounds getBounds() {
         return super.getBounds();
-    }
-
-    public static HoverTextWidget create(WidgetHolder holder, FormattedCharSequence text, int x, int y, int color, int hoverColor, boolean shadow) {
-        return holder.add(new HoverTextWidget(text, x, y, color, hoverColor, shadow));
-    }
-
-    public static HoverTextWidget create(WidgetHolder holder, Component text, int x, int y, int color, int hoverColor, boolean shadow) {
-        return holder.add(new HoverTextWidget(text.getVisualOrderText(), x, y, color, hoverColor, shadow));
     }
 
     @Override
