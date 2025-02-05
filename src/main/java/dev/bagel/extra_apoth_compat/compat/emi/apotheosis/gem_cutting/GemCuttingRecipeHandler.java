@@ -1,6 +1,7 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apotheosis.gem_cutting;
 
 import com.google.common.collect.Lists;
+import dev.bagel.extra_apoth_compat.ModConfig;
 import dev.bagel.extra_apoth_compat.compat.emi.EmiConstants;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.handler.EmiCraftContext;
@@ -67,7 +68,7 @@ public class GemCuttingRecipeHandler implements StandardRecipeHandler<GemCutting
     public boolean craft(EmiRecipe rec, EmiCraftContext<GemCuttingMenu> context) {
         boolean action = craftDefault(rec, context);
         Minecraft client = Minecraft.getInstance();
-        if (action) {
+        if (action && ModConfig.pressButtonOnFillGemCutting) {
             GemCuttingMenu sh = context.getScreenHandler();
             client.gameMode.handleInventoryButtonClick(sh.containerId, 0);
             if (context.getDestination() == EmiCraftContext.Destination.CURSOR) {
