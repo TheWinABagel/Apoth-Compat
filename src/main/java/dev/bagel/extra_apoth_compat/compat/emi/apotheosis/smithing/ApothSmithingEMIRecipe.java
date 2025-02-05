@@ -9,16 +9,20 @@ import dev.emi.emi.recipe.EmiSmithingRecipe;
 import dev.emi.emi.registry.EmiTags;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public abstract class ApothSmithingEMIRecipe extends EmiSmithingRecipe {
     protected final int uniq = EmiUtil.RANDOM.nextInt();
+    protected final Random rand = EmiUtil.RANDOM;
     protected static final List<EmiStack> TOOLS;
+    protected final Supplier<Component> outputTooltip;
 
     static {
         List<EmiStack> valid_tools = new ArrayList<>(EmiTags.getRawValues(Tags.Items.TOOLS));
@@ -26,8 +30,9 @@ public abstract class ApothSmithingEMIRecipe extends EmiSmithingRecipe {
         TOOLS = valid_tools.stream().filter(emiStack -> LootCategory.forItem(emiStack.getItemStack()) != LootCategory.NONE).toList();
     }
 
-    public ApothSmithingEMIRecipe(EmiIngredient addition, ResourceLocation id) {
+    public ApothSmithingEMIRecipe(EmiIngredient addition, ResourceLocation id, Supplier<Component> outputTooltip) {
         super(EmiStack.EMPTY, EmiStack.of(Apoth.Blocks.AUGMENTING_TABLE.value()), addition, EmiStack.of(Apoth.Blocks.AUGMENTING_TABLE.value()), id);
+        this.outputTooltip = outputTooltip;
     }
 
     @Override
@@ -40,8 +45,8 @@ public abstract class ApothSmithingEMIRecipe extends EmiSmithingRecipe {
         widgets.addTexture(EmiTexture.EMPTY_ARROW, 62, 1);
         widgets.addSlot(EmiStack.EMPTY, 0, 0);
         widgets.addGeneratedSlot(r -> getStack(r, 0), uniq, 18, 0);
-        widgets.addGeneratedSlot(r -> getStack(r, 1), uniq, 36, 0);
-        widgets.addGeneratedSlot(r -> getStack(r, 2), uniq, 94, 0).recipeContext(this);
+        widgets.addSlot(this.addition, 36, 0);
+        widgets.addGeneratedSlot(r -> getStack(r, 2), uniq, 94, 0).recipeContext(this).appendTooltip(outputTooltip.get());
     }
 
     protected abstract EmiStack getStack(Random r, int slot);

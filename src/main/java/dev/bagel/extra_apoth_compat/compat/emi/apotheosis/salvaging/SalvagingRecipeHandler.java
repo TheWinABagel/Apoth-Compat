@@ -56,6 +56,6 @@ public class SalvagingRecipeHandler implements StandardRecipeHandler<SalvagingMe
 
     @Override
     public boolean supportsRecipe(EmiRecipe recipe) {
-        return recipe.getCategory() == EmiConstants.Apotheosis.SALVAGING && ((SalvagingEMIRecipe) recipe).getData().type().hidesFillButton();
+        return recipe.getCategory() == EmiConstants.Apotheosis.SALVAGING && recipe instanceof SalvagingEMIRecipe sr && !sr.getData().type().hidesFillButton();
     }
 }

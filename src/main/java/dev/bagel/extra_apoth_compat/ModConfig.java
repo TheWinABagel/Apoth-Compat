@@ -10,6 +10,7 @@ public class ModConfig {
     public static boolean emiCompat = true;
 
     public static boolean pressButtonOnFillSalvaging = false;
+    public static boolean pressButtonOnFillGemCutting = false;
 
     public static void load() {
         Configuration cfg = new Configuration(ApothicAttributes.getConfigFile(ExtraApothCompat.MODID));
@@ -20,6 +21,7 @@ public class ModConfig {
         emiCompat = cfg.getBoolean("EMI Compat", "compat", true, "If EMI compatibility should be loaded.");
 
         pressButtonOnFillSalvaging = cfg.getBoolean("Salvage on Fill", "emi", false, "If the ingredient should be automatically salvaged when the fill recipe button is clicked.");
+        pressButtonOnFillGemCutting = cfg.getBoolean("Gem Cut on Fill", "emi", false, "If the gem should be automatically cut when the fill recipe button is clicked.");
 
         if (cfg.hasChanged()) {
             cfg.save();

@@ -13,6 +13,7 @@ import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.SocketingSigi
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.UnnamingEMIRecipe;
 import dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing.WithdrawalEMIRecipe;
 import dev.emi.emi.api.EmiRegistry;
+import dev.emi.emi.api.recipe.EmiInfoRecipe;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.shadowsoffire.apotheosis.Apoth;
@@ -27,8 +28,10 @@ import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.BasicGemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.util.ApothSmithingRecipe;
+import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apothic_enchanting.table.infusion.InfusionRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
@@ -47,6 +50,15 @@ public class ApotheosisEmiPlugin {
         gemCutting(registry);
         charm(registry);
         smithing(registry);
+
+        List<EmiIngredient> gems = new ArrayList<>();
+        for (Purity purity : Purity.values()) {
+            gems.add(EmiIngredient.of(new GemIngredient(purity).toVanilla()));
+        }
+        registry.addRecipe(new EmiInfoRecipe(gems, List.of(Component.translatable("info.apotheosis.socketing")), ExtraApothCompat.synthLoc("gem_info")));
+
+        registry.addRecipe(new EmiInfoRecipe(List.of(EmiStack.of(Apoth.Items.GEM_DUST.value())), List.of(Component.translatable("info.apotheosis.gem_crushing")), ExtraApothCompat.synthLoc("gem_crushing")));
+        registry.addRecipe(new EmiInfoRecipe(List.of(EmiStack.of(Apoth.Items.SIGIL_OF_UNNAMING.value())), List.of(Component.translatable("info.apotheosis.unnaming")), ExtraApothCompat.synthLoc("unnaming_info")));
     }
 
     private static void smithing(EmiRegistry registry) {
@@ -56,24 +68,23 @@ public class ApotheosisEmiPlugin {
         registry.getRecipeManager().getAllRecipesFor(Apoth.RecipeTypes.SALVAGING).forEach(holder -> {
             registry.addRecipe(new SalvagingEMIRecipe(holder));
         });
-
+        List<EmiIngredient> gems = new ArrayList<>();
+        GemRegistry.INSTANCE.getValues().forEach(gem -> {
+            Arrays.stream(Purity.values()).forEach(purity -> {
+                if (purity.isAtLeast(gem.getMinPurity())) {
+                    gems.add(EmiStack.of(GemRegistry.createGemStack(gem, purity)));
+                }
+            });
+        });
         List<RecipeHolder<SmithingRecipe>> recipes = registry.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING).stream()
                 .filter(holder -> holder.value() instanceof ApothSmithingRecipe)
                 .toList();
         for (RecipeHolder<SmithingRecipe> holder : recipes) {
             if (holder.value() instanceof AddSocketsRecipe asr) {
                 registry.removeRecipes(holder.id());
-                registry.addRecipe(new SocketingSigilEMIRecipe(EmiIngredient.of(asr.getInput()), ExtraApothCompat.synthesise(holder.id())));
+                registry.addRecipe(new SocketingSigilEMIRecipe(EmiIngredient.of(asr.getInput()), ExtraApothCompat.synthesise(holder.id()), asr.getMaxSockets()));
             } else if (holder.value() instanceof SocketingRecipe || holder.value() instanceof WithdrawalRecipe) {
                 registry.removeRecipes(holder.id());
-                List<EmiIngredient> gems = new ArrayList<>();
-                GemRegistry.INSTANCE.getValues().forEach(gem -> {
-                    Arrays.stream(Purity.values()).forEach(purity -> {
-                        if (purity.isAtLeast(gem.getMinPurity())) {
-                            gems.add(EmiStack.of(GemRegistry.createGemStack(gem, purity)));
-                        }
-                    });
-                });
                 if (holder.value() instanceof SocketingRecipe) {
                     registry.addRecipe(new SocketingEMIRecipe(EmiStack.of(Apoth.Items.GEM.value()), ExtraApothCompat.synthesise(holder.id()), gems));
                 } else {

@@ -4,13 +4,15 @@ import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 
 public class WithdrawalEMIRecipe extends SocketingEMIRecipe {
     public WithdrawalEMIRecipe(EmiIngredient addition, ResourceLocation id, List<EmiIngredient> gems) {
-        super(addition, id, gems);
+        super(addition, id, gems, () -> Component.translatable("emi.extra_apoth_compat.withdrawal.info").withStyle(ChatFormatting.DARK_RED));
     }
 
     @Override
@@ -19,7 +21,7 @@ public class WithdrawalEMIRecipe extends SocketingEMIRecipe {
         widgets.addSlot(EmiStack.EMPTY, 0, 0);
         widgets.addGeneratedSlot(r -> getStack(r, 2), uniq, 18, 0);
         widgets.addSlot(this.addition, 36, 0);
-        widgets.addGeneratedSlot(r -> getStack(r, 0), uniq, 94, 0).recipeContext(this);
+        widgets.addGeneratedSlot(r -> getStack(r, 0), uniq, 94, 0).recipeContext(this).appendTooltip(outputTooltip.get());
     }
 
     @Override

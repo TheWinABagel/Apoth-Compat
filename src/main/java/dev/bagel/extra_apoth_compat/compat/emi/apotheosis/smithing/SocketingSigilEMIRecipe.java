@@ -3,6 +3,8 @@ package dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -16,8 +18,8 @@ public class SocketingSigilEMIRecipe extends ApothSmithingEMIRecipe {
         return EmiStack.of(copy);
     }).toList();
 
-    public SocketingSigilEMIRecipe(EmiIngredient addition, ResourceLocation id) {
-        super(addition, id);
+    public SocketingSigilEMIRecipe(EmiIngredient addition, ResourceLocation id, int maxSockets) {
+        super(addition, id, () -> Component.translatable("emi.extra_apoth_compat.socketing_sigil.info", maxSockets).withStyle(ChatFormatting.GOLD));
     }
 
     @Override

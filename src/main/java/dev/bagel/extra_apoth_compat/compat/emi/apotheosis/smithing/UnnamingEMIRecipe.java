@@ -1,42 +1,35 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing;
 
-import dev.emi.emi.EmiUtil;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
-import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
-import dev.shadowsoffire.apotheosis.affix.ItemAffixes;
-import dev.shadowsoffire.apotheosis.loot.LootCategory;
+import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.loot.LootRule;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class UnnamingEMIRecipe extends ApothSmithingEMIRecipe {
 
     public UnnamingEMIRecipe(EmiIngredient addition, ResourceLocation id) {
-        super(addition, id);
+        super(addition, id, () -> Component.translatable("emi.extra_apoth_compat.unnaming.info").withStyle(ChatFormatting.DARK_RED));
     }
 
     @Override
     protected EmiStack getStack(Random r, int slot) {
         ItemStack named = createLootItem(TOOLS.get(r.nextInt(0, TOOLS.size())).getItemStack());
         ItemStack out = named.copy();
-        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(named.copy());
-//        if (!rarity.isBound()) return ItemStack.EMPTY;
+        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(out);
+        if (!rarity.isBound()) return EmiStack.EMPTY; //uh oh
         // args[1] will be set to the item's underlying name. args[0] will be ignored.
         Component comp = Component.translatable("%2$s", "", "").withStyle(Style.EMPTY.withColor(rarity.get().color()));
         AffixHelper.setName(out, comp);
@@ -48,7 +41,13 @@ public class UnnamingEMIRecipe extends ApothSmithingEMIRecipe {
         };
     }
 
-    public static ItemStack createLootItem(ItemStack stack) {
+    public ItemStack createLootItem(ItemStack stack) {
+        List<LootRarity> rarites = RarityRegistry.getSortedRarities();
+        LootRarity rarity = rarites.get(rand.nextInt(0, rarites.size()));
+        return LootController.createLootItem(stack, rarity, GenContext.forPlayer(Minecraft.getInstance().player));
+    }
+
+/*    public static ItemStack createLootItem(ItemStack stack) {
         GenContext ctx = GenContext.forPlayer(Minecraft.getInstance().player);
         Random rand = EmiUtil.RANDOM;
         List<LootRarity> rarites = RarityRegistry.getSortedRarities();
@@ -63,9 +62,7 @@ public class UnnamingEMIRecipe extends ApothSmithingEMIRecipe {
 
         ItemAffixes loaded = stack.getOrDefault(Apoth.Components.AFFIXES, ItemAffixes.EMPTY);
         if (loaded.size() == 0) {
-            return stack; // TOD: Re-enable the hard error when we actually have affixes loaded.
-            // throw new RuntimeException(String.format("Failed to locate any affixes for %s{%s} with category %s and rarity %s.", stack.getItem(), stack.getComponents(),
-            // cat, rarity));
+            return stack;
         }
 
         List<Affix> nameList = new ArrayList<>(loaded.size());
@@ -80,5 +77,5 @@ public class UnnamingEMIRecipe extends ApothSmithingEMIRecipe {
         AffixHelper.setName(stack, name);
 
         return stack;
-    }
+    }*/
 }

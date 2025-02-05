@@ -1,19 +1,24 @@
 package dev.bagel.extra_apoth_compat.compat.emi.apotheosis.smithing;
 
+import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
+import dev.emi.emi.api.widget.WidgetHolder;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.socket.SocketedGems;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class SocketingEMIRecipe extends ApothSmithingEMIRecipe {
     private static final List<EmiStack> TOOLS_INPUT = TOOLS.stream().map(s -> {
@@ -31,13 +36,27 @@ public class SocketingEMIRecipe extends ApothSmithingEMIRecipe {
     private ItemStack currentGem = ItemStack.EMPTY;
 
     public SocketingEMIRecipe(EmiIngredient addition, ResourceLocation id, List<EmiIngredient> gems) {
-        super(addition, id);
+        super(addition, id, () -> Component.translatable("emi.extra_apoth_compat.socketing.info").withStyle(ChatFormatting.GOLD));
+        this.gems = gems;
+    }
+
+    public SocketingEMIRecipe(EmiIngredient addition, ResourceLocation id, List<EmiIngredient> gems, Supplier<Component> component) {
+        super(addition, id, component);
         this.gems = gems;
     }
 
     @Override
     public List<EmiIngredient> getInputs() {
         return List.of(EmiIngredient.of(gems));
+    }
+
+    @Override
+    public void addWidgets(WidgetHolder widgets) {
+        widgets.addTexture(EmiTexture.EMPTY_ARROW, 62, 1);
+        widgets.addSlot(EmiStack.EMPTY, 0, 0);
+        widgets.addGeneratedSlot(r -> getStack(r, 0), uniq, 18, 0);
+        widgets.addGeneratedSlot(r -> getStack(r, 1), uniq, 36, 0);
+        widgets.addGeneratedSlot(r -> getStack(r, 2), uniq, 94, 0).recipeContext(this).appendTooltip(outputTooltip.get());
     }
 
     @Override

@@ -14,9 +14,11 @@ Partially implemented:
     - [x] Smithing
     - [x] Gem Cutting
     - [x] Salvaging
+    - [x] Info
   - [x] Apothic Enchanting
     - [x] Infusion
     - [x] Anvil Recipes
+    - [x] Info
   - [x] Apothic Spawners
     - [x] Spawner
     - [x] Info
@@ -28,9 +30,3 @@ Partially implemented:
   - [x] Gem Cutting
   - [x] Salvaging
 - [x] Recipe Defaults
-
-## TODO: Implicit paxel support for some mods
-
-- [ ] Mekanism
-- [ ] AA
-- [ ] Others?

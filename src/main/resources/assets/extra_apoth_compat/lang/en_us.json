@@ -6,5 +6,9 @@
   "emi.category.extra_apoth_compat.spawner_modifier": "Spawner Modifiers",
   "emi.category.extra_apoth_compat.gem_cutting": "Gem Cutting",
   "emi.category.extra_apoth_compat.enchanting": "Infusion",
-  "emi.category.extra_apoth_compat.salvaging": "Salvaging"
+  "emi.category.extra_apoth_compat.salvaging": "Salvaging",
+  "emi.extra_apoth_compat.unnaming.info": "Affix name will be removed",
+  "emi.extra_apoth_compat.socketing_sigil.info": "Item will have a socket added, up to %d",
+  "emi.extra_apoth_compat.socketing.info": "Gem will be added to this item",
+  "emi.extra_apoth_compat.withdrawal.info": "All Gems will be removed from this item"
 }
