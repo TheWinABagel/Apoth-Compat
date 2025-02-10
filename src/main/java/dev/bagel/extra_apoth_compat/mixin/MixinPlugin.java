@@ -1,6 +1,5 @@
 package dev.bagel.extra_apoth_compat.mixin;
 
-import dev.bagel.extra_apoth_compat.ExtraApothCompat;
 import dev.bagel.extra_apoth_compat.ModConfig;
 import dev.bagel.extra_apoth_compat.ModMixinConfig;
 import org.objectweb.asm.tree.ClassNode;
@@ -20,6 +19,9 @@ public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
 //        ExtraApothCompat.LOGGER.info("Mixin class name: {}, target is {}", mixinClassName, targetClassName);
+        if (!mixinClassName.startsWith(MixinPlugin.class.getPackageName())) {
+            return true; //Only configure our stuff
+        }
         for (String str : ModMixinConfig.disabledMixins) {
             if (str.equals(mixinClassName)) return false;
         }
