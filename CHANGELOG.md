@@ -2,7 +2,7 @@
 
 ## 1.0.2
 
-* Make the mixin plugin ignore other mod's mixins
+* Make the mixin plugin not explode due to unforeseen class loader shenanigans
 
 ## 1.0.1
 
