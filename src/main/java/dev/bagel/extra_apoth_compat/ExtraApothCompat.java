@@ -10,10 +10,10 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
 
-@Mod(ExtraApothCompat.MODID)
+@Mod(EACConstants.MODID)
 public class ExtraApothCompat {
 
-    public static final String MODID = "extra_apoth_compat";
+    public static final String MODID = EACConstants.MODID;
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public ExtraApothCompat(IEventBus modEventBus) {
