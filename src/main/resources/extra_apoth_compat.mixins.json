@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "dev.bagel.extra_apoth_compat.mixin.MixinPlugin",
   "mixins": [
+    "AttributesGuiHideUnchangedMixin",
     "disable_jei.ApotheosisJEIPluginMixin"
   ],
   "injectors": {

@@ -30,6 +30,9 @@ public class MixinPlugin implements IMixinConfigPlugin {
         if (ModConfig.Loaded.JEI && mixinName[4].equals("disable_jei") && ModMixinConfig.disableJeiLoading) {
             return isLoaded(targetName[2]);
         }
+        if (mixinName[4].equals("AttributesGuiHideUnchangedMixin")) {
+            return ModMixinConfig.hideUnchangedProperly;
+        }
 
         return true;
     }
