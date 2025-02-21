@@ -3,10 +3,8 @@ Extra Apoth Compat
 Extra mod compat for Apotheosis + co
 
 ## Current features:
-
-A config to allow for features to be enabled/disabled
-
-Partially implemented:
+- A fix to properly hide dynamic attributes with no modifiers when the Hide Unchanged button is pressed
+- Puffish skills and Curios modifier source compat (Shows what item you get the attribute modifier from)
 
 - [x] EMI support
   - [x] Apotheosis (Formerly Adventure Module)
@@ -30,3 +28,6 @@ Partially implemented:
   - [x] Gem Cutting
   - [x] Salvaging
 - [x] Recipe Defaults
+
+
+A config to allow for features to be enabled/disabled
