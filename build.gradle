@@ -30,14 +30,14 @@ repositories {
         url = "https://maven.terraformersmc.com/"
     }
     maven {
-        //Actually Additions
+        //Puffish Skills
         url = "https://www.cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
     }
     maven {
-        // Patchouli
+        // Patchouli, JEI
         url = "https://maven.blamejared.com"
         content {
             includeGroup "vazkii.patchouli"
@@ -48,10 +48,7 @@ repositories {
     }
     maven {
         // Curios
-        url = "https://maven.octo-studios.com/releases"
-        content {
-            includeGroupByRegex "top\\.theillusivec4.*"
-        }
+        url = "https://maven.theillusivec4.top/"
     }
     mavenLocal()
 }
@@ -132,8 +129,6 @@ dependencies {
     compileOnly "dev.emi:emi-neoforge:${emi_version}+${minecraft_version}"
     localRuntime "dev.emi:emi-neoforge:${emi_version}+${minecraft_version}"
 
-    //Actually Additions
-    compileOnly "curse.maven:actually-additions-228404:6003504"
 }
 
 tasks.withType(ProcessResources).configureEach {
