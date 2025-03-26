@@ -27,7 +27,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         }
         String[] mixinName = mixinClassName.split("\\.");
         String[] targetName = targetClassName.split("\\.");
-        if (ModConfig.Loaded.JEI && mixinName[4].equals("disable_jei") && ModMixinConfig.disableJeiLoading) {
+        if (ModConfig.Loaded.JEI && ModConfig.Loaded.EMI && mixinName[4].equals("disable_jei") && ModMixinConfig.disableJeiLoading) {
             return isLoaded(targetName[2]);
         }
         if (mixinName[4].equals("AttributesGuiHideUnchangedMixin")) {
