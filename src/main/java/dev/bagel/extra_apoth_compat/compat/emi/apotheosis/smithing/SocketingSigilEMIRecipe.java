@@ -34,4 +34,9 @@ public class SocketingSigilEMIRecipe extends ApothSmithingEMIRecipe {
             default -> throw new RuntimeException("whar");
         };
     }
+
+    @Override
+    protected boolean isGenerated(int slot) {
+        return slot != ADDITION;
+    }
 }

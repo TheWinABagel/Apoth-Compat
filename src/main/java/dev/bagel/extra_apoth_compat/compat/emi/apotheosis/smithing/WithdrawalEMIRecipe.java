@@ -19,9 +19,10 @@ public class WithdrawalEMIRecipe extends SocketingEMIRecipe {
     public void addWidgets(WidgetHolder widgets) {
         widgets.addTexture(EmiTexture.EMPTY_ARROW, 62, 1);
         widgets.addSlot(EmiStack.EMPTY, 0, 0);
-        widgets.addGeneratedSlot(r -> getStack(r, 2), uniq, 18, 0);
+        addSlot(widgets, 18, 0, OUTPUT);
+//        addSlot(widgets, 18, 0, ADDITION);
         widgets.addSlot(this.addition, 36, 0);
-        widgets.addGeneratedSlot(r -> getStack(r, 0), uniq, 94, 0).recipeContext(this).appendTooltip(outputTooltip.get());
+        addSlot(widgets, 94, 0, INPUT).recipeContext(this).appendTooltip(outputTooltip.get());
     }
 
     @Override

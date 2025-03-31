@@ -41,41 +41,15 @@ public class UnnamingEMIRecipe extends ApothSmithingEMIRecipe {
         };
     }
 
+    @Override
+    protected boolean isGenerated(int slot) {
+        return slot != ADDITION;
+    }
+
     public ItemStack createLootItem(ItemStack stack) {
         List<LootRarity> rarites = RarityRegistry.getSortedRarities();
         LootRarity rarity = rarites.get(rand.nextInt(0, rarites.size()));
         return LootController.createLootItem(stack, rarity, GenContext.forPlayer(Minecraft.getInstance().player));
     }
 
-/*    public static ItemStack createLootItem(ItemStack stack) {
-        GenContext ctx = GenContext.forPlayer(Minecraft.getInstance().player);
-        Random rand = EmiUtil.RANDOM;
-        List<LootRarity> rarites = RarityRegistry.getSortedRarities();
-        LootRarity rarity = rarites.get(rand.nextInt(0, rarites.size()));
-        stack.set(Apoth.Components.AFFIXES, ItemAffixes.EMPTY);
-        AffixHelper.setRarity(stack, rarity);
-        LootCategory cat = LootCategory.forItem(stack);
-
-        for (LootRule rule : rarity.getRules(cat)) {
-            rule.execute(stack, rarity, ctx);
-        }
-
-        ItemAffixes loaded = stack.getOrDefault(Apoth.Components.AFFIXES, ItemAffixes.EMPTY);
-        if (loaded.size() == 0) {
-            return stack;
-        }
-
-        List<Affix> nameList = new ArrayList<>(loaded.size());
-        for (DynamicHolder<Affix> a : loaded.keySet()) {
-            nameList.add(a.get());
-        }
-
-        rand.setSeed(ctx.rand().nextLong());
-        Collections.shuffle(nameList, rand);
-        String key = nameList.size() > 1 ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.two";
-        MutableComponent name = Component.translatable(key, nameList.get(0).getName(true), "", nameList.size() > 1 ? nameList.get(1).getName(false) : "").withStyle(Style.EMPTY.withColor(rarity.color()));
-        AffixHelper.setName(stack, name);
-
-        return stack;
-    }*/
 }
