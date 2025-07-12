@@ -93,7 +93,7 @@ public class SpawnerModifierEmiRecipe implements EmiRecipe {
             //bottom question mark
             widgets.addHoverTextureWidget(TEXTURES, 0, 50, 10, 12, -1, 50)
                     .hoverTexture(0, 75)
-                    .tooltip(List.of(EmiTooltipComponents.of(ApothicSpawners.lang("misc", "mainhand"))));
+                    .tooltip(List.of(EmiTooltipComponents.of(ApothicSpawners.lang("misc", "offhand"))));
         } else {
             //Add curved arrow when no offhand input
             widgets.addTexture(TEXTURES, 1, 31, 28, 34, 0, 88);
